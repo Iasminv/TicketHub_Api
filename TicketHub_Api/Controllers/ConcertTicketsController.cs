@@ -28,21 +28,28 @@ namespace TicketHub_Api.Controllers
         [HttpPost]
         public async Task<IActionResult> Post(Ticket ticket)
         {
-            // Validate ticket
-            if (string.IsNullOrEmpty(ticket.Name))
+
+            if (ModelState.IsValid == false)
             {
-                return BadRequest("Invalid Name");
+                return BadRequest(ModelState);
             }
 
             string queueName = "tickets";
-            string connectionString = "connection string goes here";
-            // QueueClient queueClient = new QueueClient(connectionString, queueName);
+
+            string? connectionString = _configuration["AzureStorageConnectionString"];
+
+            if (string.IsNullOrEmpty(connectionString)) 
+            {
+                return BadRequest("An error was encountered");
+            }
+            
+            QueueClient queueClient = new QueueClient(connectionString, queueName);
 
             // serialize an object to json
-            //string message = JsonSerializer.Serialize(someObject);
+            string message = JsonSerializer.Serialize(ticket);
 
             // send string message to queue
-            // await queueClient.SendMessageAsync("Hello from my api");
+            await queueClient.SendMessageAsync("Hello from my api");
 
             return Ok("Hello " + ticket.Name + ". Ticket sent to storage queue.");
         }

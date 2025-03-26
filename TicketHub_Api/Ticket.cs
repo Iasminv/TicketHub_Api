@@ -19,6 +19,7 @@ namespace TicketHub_Api
         [Required(ErrorMessage = "Should be at least one")]
         public int Quantity {  get; set; }
 
+        [CreditCard (ErrorMessage = "Invalid Credit Card Number")]
         [Required(ErrorMessage = "Credit Card Number is required")]
         public string CreditCard {  get; set; } = string.Empty;
 
