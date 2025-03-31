@@ -11,12 +11,14 @@ namespace TicketHub_Api
         public string Email { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Name is required")]
+        [MaxLength(200)]
         public string Name { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Phone Number is required")]
         public string  Phone {  get; set; } = string.Empty;
 
-        [Required(ErrorMessage = "Should be at least one")]
+        [Required(ErrorMessage = "Tickets quantity is required")]
+        [Range(1, int.MaxValue, ErrorMessage = "Value should be greater than or equal to 1")]
         public int Quantity {  get; set; }
 
         [CreditCard (ErrorMessage = "Invalid Credit Card Number")]
@@ -24,6 +26,7 @@ namespace TicketHub_Api
         public string CreditCard {  get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Expiration is required")]
+        [StringLength(4, MinimumLength = 3, ErrorMessage = "Security code must be 3 or 4 digits")]
         public string Expiration {  get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Security Code is required")]
