@@ -4,6 +4,7 @@ namespace TicketHub_Api
 {
     public class Ticket
     {
+        [Required(ErrorMessage = "Concert Id is required")]
         public int ConcertId { get; set; }
 
         [Required(ErrorMessage = "Email is required")]
@@ -15,6 +16,7 @@ namespace TicketHub_Api
         public string Name { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Phone Number is required")]
+        [Phone(ErrorMessage = "Input should be in Phone Number format")]
         public string  Phone {  get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Tickets quantity is required")]
@@ -26,16 +28,21 @@ namespace TicketHub_Api
         public string CreditCard {  get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Expiration is required")]
-        [StringLength(4, MinimumLength = 3, ErrorMessage = "Security code must be 3 or 4 digits")]
-        public string Expiration {  get; set; } = string.Empty;
+        [RegularExpression(@"^(0[1-9]|1[0-2])(\/?)([0-9]{2}|[0-9]{4})$",
+            ErrorMessage = "Expiration must be in MM/YY or MM/YYYY format")]
+        public string Expiration { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = "Security Code is required")]
+        [Required(ErrorMessage = "Security code is required")]
+        [RegularExpression(@"^[0-9]{3,4}$",
+            ErrorMessage = "Security code must be 3 or 4 digits")]
         public string SecurityCode { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Address is required")]
+        [MaxLength(200)]
         public string Address { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "City is required")]
+        [MaxLength(80)]
         public string City { get; set; } =string.Empty;
 
         [Required(ErrorMessage = "Province is required")]
