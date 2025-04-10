@@ -47,7 +47,6 @@ namespace TicketHub_Api.Controllers
 
             // serialize an object to json
             string message = JsonSerializer.Serialize(ticket);
-            await queueClient.SendMessageAsync(message);
 
             // send string message to queue
             await queueClient.SendMessageAsync(message);
