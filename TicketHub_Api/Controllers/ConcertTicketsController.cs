@@ -49,7 +49,7 @@ namespace TicketHub_Api.Controllers
             string message = JsonSerializer.Serialize(ticket);
 
             // send string message to queue
-            await queueClient.SendMessageAsync("Hello from my api");
+            await queueClient.SendMessageAsync(message);
 
             return Ok("Hello " + ticket.Name + ". Ticket sent to storage queue.");
         }
